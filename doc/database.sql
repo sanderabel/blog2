@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 28, 2018 at 11:54 AM
+-- Generation Time: May 28, 2018 at 10:47 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.0.27-0+deb9u1
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -30,12 +31,6 @@ CREATE TABLE `post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `post`:
---   `user_id`
---       `users` -> `user_id`
---
-
---
 -- Dumping data for table `post`
 --
 
@@ -57,10 +52,6 @@ CREATE TABLE `translations` (
   `controller` varchar(15) NOT NULL,
   `action` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELATIONS FOR TABLE `translations`:
---
 
 --
 -- Dumping data for table `translations`
@@ -109,10 +100,6 @@ CREATE TABLE `users` (
   `deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `name` varchar(191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELATIONS FOR TABLE `users`:
---
 
 --
 -- Dumping data for table `users`
@@ -173,3 +160,4 @@ ALTER TABLE `users`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+SET FOREIGN_KEY_CHECKS=1;

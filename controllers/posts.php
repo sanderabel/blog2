@@ -14,6 +14,7 @@ class posts extends Controller
 
         $this->users = get_all("SELECT * FROM users");
         $this->users = get_all("SELECT * FROM post");
+        $this->posts = get_all("SELECT * FROM post");
     }
 
     function view() {
