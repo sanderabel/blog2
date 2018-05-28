@@ -10,7 +10,7 @@ foreach ($posts as $post);
     <a href="<?=BASE_URL?>posts/view/<?=$post['post_id']?>"><h1><?=$post['post_subject']?></h1></a>
     <p><?=$post['post_text']?></p>
     <div>
-        <span class="badge badge-success">Posted <?=$post['post_create']?></span><div class="pull-right"><span class="label"><?=$post['user_id']?></span> <span class="label">story</span> <span class="label">blog</span> <span class="label">personal</span></div>
+        <span class="badge badge-success">Posted <?=$post['post_create']?></span><div class="pull-right"><span class="label"><?=$post['user_id']?></span> <span class="label">story</span> <span class="label">blog</span> <?php foreach ($tags as $tag): ?> <span class="label"><?=$tag['tag_name']?>/span> <?php endforeach; ?></div>
     </div>
     <hr>
 </div>
