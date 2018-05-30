@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 28, 2018 at 10:47 PM
+-- Generation Time: May 30, 2018 at 03:17 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.0.27-0+deb9u1
 
@@ -14,6 +14,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `blog`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `comment_id` int(10) UNSIGNED NOT NULL,
+  `comment_text` varchar(255) NOT NULL,
+  `comment_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`comment_id`, `comment_text`, `comment_created`) VALUES
+(1, 'Vivamus tempor convallis aliquet. Aenean eget ultrices libero. Praesent cursus nec neque at vulputate.', '2018-05-30 03:00:22'),
+(2, 'nec blandit ut, scelerisque in est. Praesent porta in velit id elementum. Suspendisse ante odio, eleifend vel mauris eu, fringilla condimentum enim.', '2018-05-30 03:03:39'),
+(3, 'putate diam, facilisis tristique arcu mauris quis ipsum. Proin sodales eros a nulla finibus pellentesque. F', '2018-05-30 03:08:13');
 
 -- --------------------------------------------------------
 
@@ -35,7 +57,69 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`post_id`, `post_subject`, `post_text`, `post_created`, `user_id`) VALUES
-(1, 'Hello World!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lobortis ac metus at efficitur. Sed non neque sed odio pretium dapibus molestie nec mi. Sed eu purus nec risus sagittis vehicula sed non metus. Vestibulum pulvinar dapibus justo, et accumsan neque accumsan et. Vivamus vulputate nulla sem, sed lacinia turpis facilisis sit amet. Vestibulum finibus accumsan nibh, et laoreet neque bibendum vulputate. Vestibulum dolor magna, dignissim ac lacinia ac, luctus eget odio. Sed placerat, dolor commodo egestas ultricies, justo nibh porttitor dui, et pretium velit urna eget nibh. Vestibulum porta tortor orci, in dictum ipsum ornare non. Aliquam efficitur ex eu ultrices semper. Aliquam erat volutpat. Fusce condimentum sed odio sit amet tincidunt.', '2018-03-29 15:45:01', 1);
+(1, 'Hello World!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lobortis ac metus at efficitur. Sed non neque sed odio pretium dapibus molestie nec mi. Sed eu purus nec risus sagittis vehicula sed non metus. Vestibulum pulvinar dapibus justo, et accumsan neque accumsan et. Vivamus vulputate nulla sem, sed lacinia turpis facilisis sit amet. Vestibulum finibus accumsan nibh, et laoreet neque bibendum vulputate. Vestibulum dolor magna, dignissim ac lacinia ac, luctus eget odio. Sed placerat, dolor commodo egestas ultricies, justo nibh porttitor dui, et pretium velit urna eget nibh. Vestibulum porta tortor orci, in dictum ipsum ornare non. Aliquam efficitur ex eu ultrices semper. Aliquam erat volutpat. Fusce condimentum sed odio sit amet tincidunt.', '2018-03-29 15:45:01', 1),
+(2, 'Hello World!2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lobortis ac metus at efficitur. Sed non neque sed odio pretium dapibus molestie nec mi. Sed eu purus nec risus sagittis vehicula sed non metus. Vestibulum pulvinar dapibus justo, et accumsan neque accumsan et. Vivamus vulputate nulla sem, sed lacinia turpis facilisis sit amet. Vestibulum finibus accumsan nibh, et laoreet neque bibendum vulputate. Vestibulum dolor magna, dignissim ac lacinia ac, luctus eget odio. Sed placerat, dolor commodo egestas ultricies, justo nibh porttitor dui, et pretium velit urna eget nibh. Vestibulum porta tortor orci, in dictum ipsum ornare non. Aliquam efficitur ex eu ultrices semper. Aliquam erat volutpat. Fusce condimentum sed odio sit amet tincidunt.', '2018-03-29 15:45:01', 1);
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+DROP TABLE IF EXISTS `post_comments`;
+CREATE TABLE `post_comments` (
+  `post_id` int(10) UNSIGNED NOT NULL,
+  `comment_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`post_id`, `comment_id`) VALUES
+(1, 1),
+(1, 2),
+(2, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_tags`
+--
+
+DROP TABLE IF EXISTS `post_tags`;
+CREATE TABLE `post_tags` (
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `tag_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post_tags`
+--
+
+INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
+(1, 1),
+(1, 2),
+(2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `tag_id` int(10) UNSIGNED NOT NULL,
+  `tag_name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tag`
+--
+
+INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
+(1, 'Test'),
+(2, 'test2');
 
 -- --------------------------------------------------------
 
@@ -113,11 +197,37 @@ INSERT INTO `users` (`user_id`, `is_admin`, `password`, `email`, `deleted`, `nam
 --
 
 --
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`comment_id`);
+
+--
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`post_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`post_id`,`comment_id`),
+  ADD KEY `comment_id` (`comment_id`);
+
+--
+-- Indexes for table `post_tags`
+--
+ALTER TABLE `post_tags`
+  ADD PRIMARY KEY (`post_id`,`tag_id`),
+  ADD KEY `tag_id` (`tag_id`) USING BTREE;
+
+--
+-- Indexes for table `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tag_id`);
 
 --
 -- Indexes for table `translations`
@@ -137,10 +247,20 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `comment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+--
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `post_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tag_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `translations`
 --
@@ -150,7 +270,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
@@ -160,4 +280,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`comment_id`),
+  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`);
+
+--
+-- Constraints for table `post_tags`
+--
+ALTER TABLE `post_tags`
+  ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`),
+  ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`);
 SET FOREIGN_KEY_CHECKS=1;
